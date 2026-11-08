@@ -1,0 +1,82 @@
+---
+name: rebuild-app
+model: sonnet
+description: Reconstructs compiled executables, libraries, and application packages into source code using clean-room reverse engineering and autonomous self-healing compilation. Use when the user wants to rebuild, clone, reconstruct, reverse engineer, or recreate an application from an executable binary, APK, ASAR package, or PE file without manual intervention.
+---
+
+# Rebuild App
+
+Reconstruct compiled applications into clean source code using evidence-first reverse engineering and autonomous compilation.
+
+> **HARD GATE** — DO NOT copy proprietary copyrighted assets into the reconstructed source. DO NOT run persistent dev servers or long-running watchers.
+
+## Quick Start
+
+Execute the reconstruction workflow autonomously when given a target binary and prompt.
+
+1. Triage the target binary with Craft Anything MCP tools.
+2. Select the destination technology stack.
+3. Extract constants into `app/mechanics.json`.
+4. Generate the source code inside `app/`.
+5. Run the build command and auto-fix compiler errors until the build passes.
+6. Deliver run instructions to the user.
+
+## Workflows
+
+### Phase 1: Target Triage and Inspection
+
+Execute `craft-anything_core_target_triage` on the target binary path.
+Identify the executable format, architecture, and language toolchain.
+For native executables, call `craft-anything_native_strings_find` to discover embedded strings and endpoints.
+Call `craft-anything_native_functions_list` to inventory discovered functions.
+Call `craft-anything_native_function_pseudocode` on entry points to inspect control flow.
+For Electron packages, call `craft-anything_js_app_map`.
+Save the analysis summary in `capture/README.md`.
+
+### Phase 2: Stack Selection and Blueprint
+
+Select the target technology stack from [REFERENCE.md](REFERENCE.md).
+Honor any explicit stack requested by the user.
+Default to Rust with egui for graphical desktop targets.
+Default to Rust console for command-line targets.
+Create the source directory at `app/`.
+Maintain a transparent progress checklist with three to seven items.
+
+### Phase 3: Mechanics Contract Extraction
+
+Extract verified operational numbers into `app/mechanics.json`.
+Record window dimensions, formula parameters, network endpoints, and timeouts.
+Link every extracted parameter to its binary offset or function address.
+Mark unobserved values with `estimated: true`.
+Generate a human-readable summary in `app/MECHANICS.md`.
+
+### Phase 4: Clean-Room Code Generation
+
+Write all required source files inside `app/`.
+Implement complete application logic without omitting error handling.
+Use clean functional placeholders for icons, textures, and proprietary artwork.
+Never copy proprietary third-party branding directly.
+Reference every parameter recorded in `app/mechanics.json` consistently.
+
+### Phase 5: Self-Healing Compilation
+
+Run the designated compiler command from the `app/` directory.
+For Rust targets, execute `cargo build --quiet`.
+For Node targets, execute `npm install && npm run build`.
+Inspect stderr if compilation fails.
+Fix syntax errors, missing imports, and type mismatches immediately.
+Re-run the build command until exit code zero.
+Do not prompt the user for compiler resolution.
+
+### Phase 6: Final Delivery
+
+Report the completed reconstruction in three to five concise sentences.
+State the chosen technology stack and verified capabilities.
+Confirm that compilation completed with exit code zero.
+Provide the exact terminal command to run the built application.
+
+## Advanced Features
+
+See [REFERENCE.md](REFERENCE.md) for detailed stack configurations, mechanics schema, and compiler recovery patterns.
+
+→ verify: bash scripts/validate-agentic-ste.sh --strict skills/rebuild-app/SKILL.md && bash scripts/validate-skill-description.sh skills/rebuild-app/SKILL.md
